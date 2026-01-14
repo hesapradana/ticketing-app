@@ -8,8 +8,8 @@
         <!-- Sidebar content here -->
         <ul class="menu w-full grow gap-1">
             <!-- Dashboard Item -->
-            <li class="">
-                <a href="#" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Dashboard">
+            <li class="{{ request()->routeIs('admin.dashboard') ? 'bg-gray-200 rounded-lg' : '' }}">
+                <a href="{{ route('admin.dashboard') }}" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Dashboard">
                     <!-- Home icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M6 19h3v-5q0-.425.288-.712T10 13h4q.425 0 .713.288T15 14v5h3v-9l-6-4.5L6 10zm-2 0v-9q0-.475.213-.9t.587-.7l6-4.5q.525-.4 1.2-.4t1.2.4l6 4.5q.375.275.588.7T20 10v9q0 .825-.588 1.413T18 21h-4q-.425 0-.712-.288T13 20v-5h-2v5q0 .425-.288.713T10 21H6q-.825 0-1.412-.587T4 19m8-6.75" />
@@ -41,7 +41,7 @@
             </li>
             
             <!-- History item -->
-            <li class="">
+            <li class="{{ request()->routeIs('histories') ? 'bg-gray-200 rounded-lg' : '' }}">
                 <a href="#" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="History">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
@@ -54,13 +54,16 @@
 
         <!-- logout -->
         <div class="w-full p-4">
-            <button type="submit" class="btn btn-outline btn-error w-full is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Logout">
-                    <!-- Logout icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M10 17v-2h4v-2h-4v-2l-5 3l5 3m9-12H5q-.825 0-1.413.588T3 7v10q0 .825.587 1.413T5 19h14q.825 0 1.413-.587T21 17v-3h-2v3H5V7h14v3h2V7q0-.825-.587-1.413T19 5z" />
-                    </svg>
-                    <span class="is-drawer-close:hidden">Logout</span>
-                </button>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-outline btn-error w-full is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Logout">
+                        <!-- Logout icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M10 17v-2h4v-2h-4v-2l-5 3l5 3m9-12H5q-.825 0-1.413.588T3 7v10q0 .825.587 1.413T5 19h14q.825 0 1.413-.587T21 17v-3h-2v3H5V7h14v3h2V7q0-.825-.587-1.413T19 5z" />
+                        </svg>
+                        <span class="is-drawer-close:hidden">Logout</span>
+                    </button>
+            </form>
         </div>
     </div>
 </div>

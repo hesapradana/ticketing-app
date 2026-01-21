@@ -28,7 +28,18 @@
                     <span class="is-drawer-close:hidden">Manajemen Kategori</span>
                 </a>
             </li>
-            
+
+            <!-- Payment Method item -->
+            <li class="{{ request()->routeIs('admin.payment-methods.*') ? 'bg-gray-200 rounded-lg' : '' }}">
+                <a href="{{ route('admin.payment-methods.index') }}" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Metode Pembayaran">
+                    <!-- icon Payment -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 4h18m-4 4h.01" />
+                    </svg>
+                    <span class="is-drawer-close:hidden">Metode Pembayaran</span>
+                </a>
+            </li>
+
             <!-- Event item -->
             <li class="{{ request()->routeIs('admin.events.*') ? 'bg-gray-200 rounded-lg' : '' }}">
                 <a href="{{ route('admin.events.index') }}" class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Event">

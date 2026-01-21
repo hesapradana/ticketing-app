@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\User\EventController as UserEventController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\Admin\TiketController;
@@ -27,6 +28,9 @@ Route::middleware(['auth'])->group(function () {
 
         // Category Management
         Route::resource('categories', CategoryController::class);
+
+        // Payment Method Management
+        Route::resource('payment-methods', PaymentMethodController::class);
 
         // Event Management
         Route::resource('events', EventController::class);

@@ -31,4 +31,20 @@ class Tiket extends Model
         return $this->belongsToMany(Order::class, 'detail_orders')
             ->withPivot('jumlah', 'subtotal_harga');
     }
+
+    /**
+     * Cek apakah tiket sudah habis
+     */
+    public function isSoldOut(): bool
+    {
+        return $this->stok === 0;
+    }
+
+    /**
+     * Cek apakah stok tiket menipis (kurang dari 5)
+     */
+    public function isLowStock(): bool
+    {
+        return $this->stok > 0 && $this->stok < 5;
+    }
 }

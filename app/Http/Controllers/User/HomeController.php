@@ -14,7 +14,8 @@ class HomeController extends Controller
     {
         $categories = Kategori::all();
 
-        $eventsQuery = Event::withMin('tikets', 'harga')
+        $eventsQuery = Event::with('tikets')
+            ->withMin('tikets', 'harga')
             ->orderBy('tanggal_waktu', 'asc');
 
         if ($request->has('kategori') && $request->kategori) {

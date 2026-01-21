@@ -42,9 +42,16 @@
 
             <div class="mt-4 space-y-4">
               @forelse($event->tikets as $tiket)
-              <div class="card card-side shadow-sm p-4 items-center">
+              <div class="card card-side shadow-sm p-4 items-center {{ $tiket->isSoldOut() ? 'opacity-60' : '' }}">
                 <div class="flex-1">
-                  <h4 class="font-bold">{{ $tiket->tipe }}</h4>
+                  <h4 class="font-bold flex items-center gap-2">
+                    {{ $tiket->tipe }}
+                    @if($tiket->isSoldOut())
+                      <span class="badge badge-error text-white text-xs">Sold Out</span>
+                    @elseif($tiket->isLowStock())
+                      <span class="badge badge-warning text-xs">Sisa {{ $tiket->stok }} tiket</span>
+                    @endif
+                  </h4>
                   <p class="text-sm text-gray-500">Stok: <span id="stock-{{ $tiket->id }}">{{ $tiket->stok }}</span></p>
                   <p class="text-sm mt-2">{{ $tiket->keterangan ?? '' }}</p>
                 </div>
@@ -54,6 +61,11 @@
                     {{ $tiket->harga ? 'Rp ' . number_format($tiket->harga, 0, ',', '.') : 'Gratis' }}
                   </div>
 
+                  @if($tiket->isSoldOut())
+                  <div class="mt-3">
+                    <span class="text-error text-sm font-semibold">Tiket Habis</span>
+                  </div>
+                  @else
                   <div class="mt-3 flex items-center justify-end gap-2">
                     <button type="button" class="btn btn-sm btn-outline" data-action="dec" data-id="{{ $tiket->id }}"
                       aria-label="Kurangi satu">-</button>
@@ -65,6 +77,7 @@
 
                   <div class="text-sm text-gray-500 mt-2">Subtotal: <span id="subtotal-{{ $tiket->id }}">Rp 0</span>
                   </div>
+                  @endif
                 </div>
               </div>
               @empty

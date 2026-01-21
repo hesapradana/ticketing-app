@@ -37,4 +37,28 @@ class Event extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Accessor: Hitung total stok semua tiket
+     */
+    public function getTotalStockAttribute(): int
+    {
+        return $this->tikets->sum('stok');
+    }
+
+    /**
+     * Cek apakah semua tiket event sudah habis
+     */
+    public function isSoldOut(): bool
+    {
+        return $this->total_stock === 0;
+    }
+
+    /**
+     * Cek apakah stok tiket menipis (kurang dari 5)
+     */
+    public function isLowStock(): bool
+    {
+        return $this->total_stock > 0 && $this->total_stock < 5;
+    }
 }

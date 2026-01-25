@@ -8,63 +8,63 @@ use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Jalankan migrasi.
      */
     public function up(): void
     {
-        // Insert default ticket types based on existing enum values
+        // Masukkan tipe tiket default berdasarkan nilai enum yang ada
         DB::table('ticket_types')->insert([
             ['nama' => 'Reguler', 'created_at' => now(), 'updated_at' => now()],
             ['nama' => 'Premium', 'created_at' => now(), 'updated_at' => now()],
         ]);
 
-        // Add new column
+        // Tambah kolom baru
         Schema::table('tikets', function (Blueprint $table) {
             $table->foreignId('ticket_type_id')->nullable()->after('event_id')->constrained()->onDelete('cascade');
         });
 
-        // Migrate existing data
+        // Migrasi data yang ada
         $regulerId = DB::table('ticket_types')->where('nama', 'Reguler')->value('id');
         $premiumId = DB::table('ticket_types')->where('nama', 'Premium')->value('id');
 
         DB::table('tikets')->where('tipe', 'reguler')->update(['ticket_type_id' => $regulerId]);
         DB::table('tikets')->where('tipe', 'premium')->update(['ticket_type_id' => $premiumId]);
 
-        // Drop old column
+        // Hapus kolom lama
         Schema::table('tikets', function (Blueprint $table) {
             $table->dropColumn('tipe');
         });
 
-        // Make ticket_type_id not nullable
+        // Ubah ticket_type_id menjadi tidak nullable
         Schema::table('tikets', function (Blueprint $table) {
             $table->foreignId('ticket_type_id')->nullable(false)->change();
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Batalkan migrasi.
      */
     public function down(): void
     {
-        // Add back the enum column
+        // Tambahkan kembali kolom enum
         Schema::table('tikets', function (Blueprint $table) {
             $table->enum('tipe', ['reguler', 'premium'])->after('event_id')->default('reguler');
         });
 
-        // Migrate data back
+        // Kembalikan data
         $regulerId = DB::table('ticket_types')->where('nama', 'Reguler')->value('id');
         $premiumId = DB::table('ticket_types')->where('nama', 'Premium')->value('id');
 
         DB::table('tikets')->where('ticket_type_id', $regulerId)->update(['tipe' => 'reguler']);
         DB::table('tikets')->where('ticket_type_id', $premiumId)->update(['tipe' => 'premium']);
 
-        // Drop foreign key and column
+        // Hapus foreign key dan kolom
         Schema::table('tikets', function (Blueprint $table) {
             $table->dropForeign(['ticket_type_id']);
             $table->dropColumn('ticket_type_id');
         });
 
-        // Delete default ticket types
+        // Hapus tipe tiket default
         DB::table('ticket_types')->whereIn('nama', ['Reguler', 'Premium'])->delete();
     }
 };

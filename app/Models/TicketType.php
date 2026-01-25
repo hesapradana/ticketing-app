@@ -18,3 +18,4 @@ class TicketType extends Model
         return $this->hasMany(Tiket::class);
     }
 }
+

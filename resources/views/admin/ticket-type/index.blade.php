@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <!-- Add Ticket Type Modal -->
+    <!-- Modal Tambah Tipe Tiket -->
     <dialog id="add_modal" class="modal">
         <form method="POST" action="{{ route('admin.ticket-types.store') }}" class="modal-box">
             @csrf
@@ -65,7 +65,7 @@
         </form>
     </dialog>
 
-    <!-- Edit Ticket Type Modal -->
+    <!-- Modal Edit Tipe Tiket -->
     <dialog id="edit_modal" class="modal">
         <form method="POST" class="modal-box">
             @csrf
@@ -87,7 +87,7 @@
         </form>
     </dialog>
 
-    <!-- Delete Modal -->
+    <!-- Modal Hapus Tipe Tiket -->
     <dialog id="delete_modal" class="modal">
         <form method="POST" class="modal-box">
             @csrf

@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+    /**
+     * Menampilkan daftar pesanan user.
+     */
     public function index()
     {
         $user = Auth::user() ?? \App\Models\User::first();
@@ -24,17 +27,24 @@ class OrderController extends Controller
         return view('orders.index', compact('orders'));
     }
 
+    /**
+     * Menampilkan detail pesanan.
+     */
     public function show(Order $order)
     {
-        $order->load('detailOrders.tiket.ticketType', 'event');
+        $order->load('detailOrders.tiket.ticketType', 'event', 'paymentMethod');
 
         return view('orders.show', compact('order'));
     }
 
+    /**
+     * Menyimpan pesanan baru.
+     */
     public function store(Request $request)
     {
         $data = $request->validate([
             'event_id' => 'required|exists:events,id',
+            'payment_method_id' => 'required|exists:payment_methods,id',
             'items' => 'required|array|min:1',
             'items.*.tiket_id' => 'required|integer|exists:tikets,id',
             'items.*.jumlah' => 'required|integer|min:1',
@@ -57,6 +67,7 @@ class OrderController extends Controller
                 $order = Order::create([
                     'user_id' => $user->id,
                     'event_id' => $data['event_id'],
+                    'payment_method_id' => $data['payment_method_id'],
                     'order_date' => Carbon::now(),
                     'total_harga' => $total,
                 ]);

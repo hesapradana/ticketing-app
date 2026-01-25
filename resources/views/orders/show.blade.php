@@ -32,6 +32,14 @@
 
           <div class="divider"></div>
 
+          <!-- Metode Pembayaran -->
+          <div class="flex justify-between items-center">
+            <span class="text-gray-500">Metode Pembayaran</span>
+            <span class="font-semibold">{{ $order->paymentMethod?->nama ?? '-' }}</span>
+          </div>
+
+          <div class="divider"></div>
+
           <div class="flex justify-between items-center">
             <span class="font-bold">Total</span>
             <span class="font-bold text-lg">Rp {{ number_format($order->total_harga, 0, ',', '.') }}</span>

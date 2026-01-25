@@ -116,12 +116,29 @@
       </aside>
     </div>
 
+    <!-- Modal Konfirmasi Checkout -->
     <dialog id="checkout_modal" class="modal">
       <form method="dialog" class="modal-box">
         <h3 class="font-bold text-lg">Konfirmasi Pembelian</h3>
         <div class="mt-4 space-y-2 text-sm">
           <div id="modalItems">
             <p class="text-gray-500">Belum ada item.</p>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Pilihan Metode Pembayaran -->
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text font-semibold">Metode Pembayaran</span>
+            </label>
+            <select id="paymentMethodSelect" class="select select-bordered w-full" required>
+              <option value="" disabled selected>Pilih Metode Pembayaran</option>
+              @foreach($paymentMethods as $method)
+                <option value="{{ $method->id }}">{{ $method->nama }}</option>
+              @endforeach
+            </select>
+            <p id="paymentMethodError" class="text-error text-xs mt-1 hidden">Silakan pilih metode pembayaran</p>
           </div>
 
           <div class="divider"></div>
@@ -258,8 +275,21 @@
       };
 
       const confirmButton = document.getElementById('confirmCheckout');
+      const paymentMethodSelect = document.getElementById('paymentMethodSelect');
+      const paymentMethodError = document.getElementById('paymentMethodError');
+
       if (confirmButton) {
         confirmButton.addEventListener('click', async () => {
+          // Validasi metode pembayaran
+          const paymentMethodId = paymentMethodSelect.value;
+          if (!paymentMethodId) {
+            paymentMethodError.classList.remove('hidden');
+            paymentMethodSelect.classList.add('select-error');
+            return;
+          }
+          paymentMethodError.classList.add('hidden');
+          paymentMethodSelect.classList.remove('select-error');
+
           confirmButton.setAttribute('disabled', 'disabled');
           confirmButton.textContent = 'Memproses...';
 
@@ -286,7 +316,11 @@
                 'Accept': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
               },
-              body: JSON.stringify({ event_id: {{ $event->id }}, items }),
+              body: JSON.stringify({
+                event_id: {{ $event->id }},
+                payment_method_id: paymentMethodId,
+                items
+              }),
             });
 
             if (!res.ok) {
@@ -301,6 +335,14 @@
             confirmButton.removeAttribute('disabled');
             confirmButton.textContent = 'Konfirmasi';
           }
+        });
+      }
+
+      // Reset error saat pilih metode pembayaran
+      if (paymentMethodSelect) {
+        paymentMethodSelect.addEventListener('change', () => {
+          paymentMethodError.classList.add('hidden');
+          paymentMethodSelect.classList.remove('select-error');
         });
       }
 

@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <!-- Add Payment Method Modal -->
+    <!-- Modal Tambah Metode Pembayaran -->
     <dialog id="add_modal" class="modal">
         <form method="POST" action="{{ route('admin.payment-methods.store') }}" class="modal-box">
             @csrf
@@ -65,7 +65,7 @@
         </form>
     </dialog>
 
-    <!-- Edit Payment Method Modal -->
+    <!-- Modal Edit Metode Pembayaran -->
     <dialog id="edit_modal" class="modal">
         <form method="POST" class="modal-box">
             @csrf
@@ -87,7 +87,7 @@
         </form>
     </dialog>
 
-    <!-- Delete Modal -->
+    <!-- Modal Hapus Metode Pembayaran -->
     <dialog id="delete_modal" class="modal">
         <form method="POST" class="modal-box">
             @csrf

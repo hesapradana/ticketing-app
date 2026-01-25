@@ -45,7 +45,7 @@
               <div class="card card-side shadow-sm p-4 items-center {{ $tiket->isSoldOut() ? 'opacity-60' : '' }}">
                 <div class="flex-1">
                   <h4 class="font-bold flex items-center gap-2">
-                    {{ $tiket->tipe }}
+                    {{ $tiket->ticketType->nama }}
                     @if($tiket->isSoldOut())
                       <span class="badge badge-error text-white text-xs">Sold Out</span>
                     @elseif($tiket->isLowStock())
@@ -152,7 +152,7 @@
             id: {{ $tiket->id }},
             price: {{ $tiket->harga ?? 0 }},
             stock: {{ $tiket->stok }},
-            tipe: "{{ e($tiket->tipe) }}"
+            tipe: "{{ e($tiket->ticketType->nama) }}"
           },
         @endforeach
       };

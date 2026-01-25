@@ -11,7 +11,7 @@ use Illuminate\View\View;
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar kategori.
      */
     public function index(): View
     {
@@ -21,7 +21,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan kategori baru.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -41,7 +41,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui kategori.
      */
     public function update(Request $request, string $id): RedirectResponse
     {
@@ -61,7 +61,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus kategori.
      */
     public function destroy(string $id): RedirectResponse
     {

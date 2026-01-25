@@ -20,7 +20,7 @@
             @foreach($order->detailOrders as $detail)
               <div class="flex justify-between items-center">
                 <div>
-                  <div class="font-bold">{{ $detail->tiket->tipe }}</div>
+                  <div class="font-bold">{{ $detail->tiket->ticketType->nama }}</div>
                   <div class="text-sm text-gray-500">Qty: {{ $detail->jumlah }}</div>
                 </div>
                 <div class="text-right">

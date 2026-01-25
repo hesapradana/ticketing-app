@@ -128,12 +128,12 @@
                         @forelse ($tickets as $index => $ticket)
                             <tr>
                                 <th>{{ $index + 1 }}</th>
-                                <td>{{ $ticket->tipe }}</td>
+                                <td>{{ $ticket->ticketType->nama }}</td>
                                 <td>{{ $ticket->harga }}</td>
                                 <td>{{ $ticket->stok }}</td>
                                 <td>
                                     <button class="btn btn-sm btn-primary mr-2" onclick="openEditTicketModal(this)"
-                                        data-id="{{ $ticket->id }}" data-tipe="{{ $ticket->tipe }}"
+                                        data-id="{{ $ticket->id }}" data-ticket-type-id="{{ $ticket->ticket_type_id }}"
                                         data-harga="{{ $ticket->harga }}"
                                         data-stok="{{ $ticket->stok }}">Edit</button>
                                     <button class="btn btn-sm bg-red-500 text-white" onclick="openDeleteTicketModal(this)"
@@ -164,10 +164,11 @@
                 <label class="label">
                     <span class="label-text font-semibold">Tipe Ticket</span>
                 </label>
-                <select name="tipe" class="select select-bordered w-full" required>
+                <select name="ticket_type_id" class="select select-bordered w-full" required>
                     <option value="" disabled selected>Pilih Tipe Ticket</option>
-                    <option value="reguler">Regular</option>
-                    <option value="premium">Premium</option>
+                    @foreach ($ticketTypes as $ticketType)
+                        <option value="{{ $ticketType->id }}">{{ $ticketType->nama }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="form-control mb-4">
@@ -205,10 +206,11 @@
                 <label class="label">
                     <span class="label-text font-semibold">Tipe Ticket</span>
                 </label>
-                <select name="tipe" id="edit_tipe" class="select select-bordered w-full" required>
+                <select name="ticket_type_id" id="edit_ticket_type_id" class="select select-bordered w-full" required>
                     <option value="" disabled selected>Pilih Tipe Ticket</option>
-                    <option value="reguler">Regular</option>
-                    <option value="premium">Premium</option>
+                    @foreach ($ticketTypes as $ticketType)
+                        <option value="{{ $ticketType->id }}">{{ $ticketType->nama }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="form-control mb-4">
@@ -278,13 +280,13 @@
 
         function openEditTicketModal(button) {
             const id = button.dataset.id;
-            const tipe = button.dataset.tipe;
+            const ticketTypeId = button.dataset.ticketTypeId;
             const harga = button.dataset.harga;
             const stok = button.dataset.stok;
 
             const form = document.querySelector('#edit_ticket_modal form');
             document.getElementById("edit_ticket_id").value = id;
-            document.getElementById("edit_tipe").value = tipe;
+            document.getElementById("edit_ticket_type_id").value = ticketTypeId;
             document.getElementById("edit_harga").value = harga;
             document.getElementById("edit_stok").value = stok;
 

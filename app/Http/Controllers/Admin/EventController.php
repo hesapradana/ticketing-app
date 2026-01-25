@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Kategori;
+use App\Models\TicketType;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -12,7 +13,7 @@ use Illuminate\View\View;
 class EventController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar event.
      */
     public function index(): View
     {
@@ -22,7 +23,7 @@ class EventController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan form untuk membuat event baru.
      */
     public function create(): View
     {
@@ -32,7 +33,7 @@ class EventController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan event baru.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -63,19 +64,20 @@ class EventController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Menampilkan detail event.
      */
     public function show(string $id): View
     {
-        $event = Event::with('kategori', 'tikets')->findOrFail($id);
+        $event = Event::with('kategori', 'tikets.ticketType')->findOrFail($id);
         $categories = Kategori::all();
+        $ticketTypes = TicketType::all();
         $tickets = $event->tikets;
 
-        return view('admin.event.show', compact('event', 'categories', 'tickets'));
+        return view('admin.event.show', compact('event', 'categories', 'tickets', 'ticketTypes'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Menampilkan form untuk mengedit event.
      */
     public function edit(string $id): View
     {
@@ -86,7 +88,7 @@ class EventController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui event.
      */
     public function update(Request $request, string $id): RedirectResponse
     {
@@ -121,7 +123,7 @@ class EventController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus event.
      */
     public function destroy(string $id): RedirectResponse
     {

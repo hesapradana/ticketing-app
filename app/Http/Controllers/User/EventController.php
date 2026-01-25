@@ -10,7 +10,7 @@ class EventController extends Controller
 {
     public function show(Event $event): View
     {
-        $event->load(['tikets', 'kategori', 'user']);
+        $event->load(['tikets.ticketType', 'kategori', 'user']);
 
         return view('events.show', compact('event'));
     }

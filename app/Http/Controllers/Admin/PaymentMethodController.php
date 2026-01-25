@@ -11,7 +11,7 @@ use Illuminate\View\View;
 class PaymentMethodController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar metode pembayaran.
      */
     public function index(): View
     {
@@ -21,7 +21,7 @@ class PaymentMethodController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan metode pembayaran baru.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -37,7 +37,7 @@ class PaymentMethodController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui metode pembayaran.
      */
     public function update(Request $request, string $id): RedirectResponse
     {
@@ -53,7 +53,7 @@ class PaymentMethodController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus metode pembayaran.
      */
     public function destroy(string $id): RedirectResponse
     {

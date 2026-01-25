@@ -10,7 +10,7 @@ use App\Models\Order;
 class DashboardController extends Controller
 {
     /**
-     * Display the dashboard.
+     * Menampilkan halaman dashboard.
      */
     public function index()
     {

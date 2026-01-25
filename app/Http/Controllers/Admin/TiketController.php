@@ -10,13 +10,13 @@ use Illuminate\Http\Request;
 class TiketController extends Controller
 {
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan tiket baru.
      */
     public function store(Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
             'event_id' => 'required|exists:events,id',
-            'tipe' => 'required|string|max:255',
+            'ticket_type_id' => 'required|exists:ticket_types,id',
             'harga' => 'required|numeric|min:0',
             'stok' => 'required|integer|min:0',
         ]);
@@ -27,14 +27,14 @@ class TiketController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui tiket.
      */
     public function update(Request $request, string $id): RedirectResponse
     {
         $ticket = Tiket::findOrFail($id);
 
         $validatedData = $request->validate([
-            'tipe' => 'required|string|max:255',
+            'ticket_type_id' => 'required|exists:ticket_types,id',
             'harga' => 'required|numeric|min:0',
             'stok' => 'required|integer|min:0',
         ]);
@@ -45,7 +45,7 @@ class TiketController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus tiket.
      */
     public function destroy(string $id): RedirectResponse
     {
